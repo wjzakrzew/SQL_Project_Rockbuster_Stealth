@@ -1,0 +1,36 @@
+# SQL Basics
+
+## Summary stats for several variables
+SELECT MIN(rental_rate) AS min_rent,
+       MAX(rental_rate) AS max_rent,
+       AVG(rental_rate) AS avg_rent,
+       COUNT(rental_rate) AS count_rent_values,
+	   
+		MIN(rental_duration) AS min_duration,
+       MAX(rental_duration) AS max_duration,
+       AVG(rental_duration) AS avg_duration,
+       COUNT(rental_duration) AS count_duration_values,
+        
+		MIN(length) AS min_length,
+       MAX(length) AS max_length,
+       AVG(length) AS avg_length,
+       COUNT(length) AS count_length_values,
+       COUNT(*) AS count_rows
+
+FROM film;
+
+## Filtering Data
+QUERY by Rating:
+SELECT
+COUNT(film_id) AS count_of_movies,
+AVG(rental_rate) AS average_movie_rental_rate,
+MAX(rental_duration) AS maximum_rental_duration, 
+MIN(rental_duration) AS minimum_rental_duration 
+FROM film
+WHERE rating IN ('PG', 'G')
+GROUP BY rating 
+
+## Basic Tables
+SELECT rating, MIN(rental_duration), MAX(rental_duration) 
+FROM film
+GROUP BY rating
