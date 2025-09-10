@@ -1,0 +1,49 @@
+## Practicing Joins in SQL
+
+SELECT D.country,
+       COUNT(customer_id) AS customer_count
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID
+GROUP BY country
+ORDER BY customer_count DESC LIMIT 10
+
+
+## Another join example by using onyl specific countries
+
+SELECT D.country,
+		C.city,
+       COUNT(customer_id) AS customer_count
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID
+WHERE country IN('India', 'China', 'United States', 
+'Japan', 'Mexico', 'Brazil', 'Russian Federation', 
+'Philippines', 'Turkey', 'Indonesia')
+GROUP BY city, country 
+ORDER BY customer_count DESC LIMIT 10
+
+
+## Top country and city by customer total- implementing some of the join techniques list above for a final result
+SELECT 	B.customer_id,
+		B.first_name,
+		B. last_name,
+		D.city,
+		E.country,
+		SUM(A.amount) AS customer_total
+FROM payment A
+INNER JOIN customer B ON A.customer_id = B.customer_id
+INNER JOIN address C ON B.address_id = C.address_id
+INNER JOIN city D ON C.city_id = D.city_id
+INNER JOIN country E ON D.country_ID = E.country_ID
+
+WHERE city IN ('Aurora', 'Atlixco', 'Xintai', 
+	'Adoni', 'Dhule (Dhulia)', 'Kurashiki', 
+	'Pingxiang', 'Sivas', 'Celaya', 'So Leopoldo') 
+AND country IN('India', 'China', 'United States', 
+	'Japan', 'Mexico', 'Brazil', 'Russian Federation', 
+	'Philippines', 'Turkey', 'Indonesia')
+GROUP BY B.customer_id, first_name, last_name, city, country
+ORDER BY customer_total DESC LIMIT 5
